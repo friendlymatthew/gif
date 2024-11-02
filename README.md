@@ -1,4 +1,4 @@
-# jif
+# gif
 
 This crate aims to provide an interface that parses and decompresses GIF files. It exposes a simple API with 2
 functions: one for parsing bytes into a compressed GIF data stream, and another for decompressing the stream into a list
@@ -7,7 +7,7 @@ of image frames.
 This repository also contains a crate to render GIFs. It provides a command-line executable that
 uses [`minifb`](https://github.com/emoon/rust_minifb) to render pixels.
 
-`jif` aims to decode any GIF from [GIPHY](https://giphy.com). Any deviation from Giphy's rendering should be
+`gif` aims to decode any GIF from [GIPHY](https://giphy.com). Any deviation from Giphy's rendering should be
 considered a bug.
 
 ## Grammar
@@ -38,7 +38,7 @@ The following legend defines the symbols used in this grammar:
 
 ## Fuzz
 
-`jif` uses an [AFL](https://en.wikipedia.org/wiki/American_Fuzzy_Lop_(software)) fuzzer to assert correctness. GIFs that
+`gif` uses an [AFL](https://en.wikipedia.org/wiki/American_Fuzzy_Lop_(software)) fuzzer to assert correctness. GIFs that
 crash are stored in `/tests` for the purpose of running
 integration tests. To fuzz, simply run the `./fuzz.sh` shell script.
 
