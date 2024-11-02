@@ -4,9 +4,9 @@ use eyre::{eyre, Ok, OptionExt, Result};
 
 use crate::bitstream::BitStream;
 use crate::grammar::{
-    ApplicationExtension, build_code_table, CommentExtension, DEFAULT_BACKGROUND_COLOR, DisposalMethod,
-    Frame, GraphicControlExtension, ImageDescriptor, LogicalScreenDescriptor, parse_color_table,
-    PlainTextExtension, TableBasedImage,
+    build_code_table, parse_color_table, ApplicationExtension, CommentExtension, DisposalMethod,
+    Frame, GraphicControlExtension, ImageDescriptor, LogicalScreenDescriptor, PlainTextExtension,
+    TableBasedImage, DEFAULT_BACKGROUND_COLOR,
 };
 
 #[derive(Debug)]
@@ -29,7 +29,7 @@ impl Block {
 
 #[derive(Debug)]
 pub struct GifDataStream {
-    pub version: String,
+    pub version: [u8],
     pub logical_screen_descriptor: LogicalScreenDescriptor,
     pub global_color_table: Option<Vec<u8>>,
     pub blocks: Vec<Block>,

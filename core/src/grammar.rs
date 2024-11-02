@@ -12,7 +12,7 @@ pub mod label {
 
 #[derive(Debug)]
 pub struct ApplicationExtension {
-    pub identifier: String,
+    pub identifier: [u8],
     pub authentication_code: [u8; 3],
     pub data: Vec<u8>,
 }

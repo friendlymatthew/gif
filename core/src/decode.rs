@@ -1,17 +1,17 @@
 use eyre::{eyre, Result};
 
+use crate::gif_data_stream::{Block, GifDataStream};
 use crate::{
     buffer::Buffer,
     grammar::{
-        ApplicationExtension,
-        CommentExtension, GraphicControlExtension, ImageDescriptor, label::{
+        label::{
             APPLICATION_EXTENSION, COMMENT_EXTENSION, EXTENSION, GRAPHIC_CONTROL_EXTENSION,
             IMAGE_DESCRIPTOR, PLAIN_TEXT_EXTENSION,
         },
+        ApplicationExtension, CommentExtension, GraphicControlExtension, ImageDescriptor,
         LogicalScreenDescriptor, PlainTextExtension, TableBasedImage,
     },
 };
-use crate::gif_data_stream::{Block, GifDataStream};
 
 /// The decoder is the program used to process a GIF data stream.
 ///
@@ -33,7 +33,7 @@ impl Decoder {
     pub fn parse(&mut self) -> Result<GifDataStream> {
         let buffer = &mut self.buffer;
         buffer.expect(*b"GIF")?;
-        let version = String::from_utf8(buffer.read_slice(3)?)?;
+        let version = buffer.read_slice(3)?;
 
         // logical_screen_descriptor
         let logical_screen_descriptor = LogicalScreenDescriptor {
@@ -65,7 +65,7 @@ impl Decoder {
                     APPLICATION_EXTENSION => {
                         let _block_size = buffer.next()? as usize;
                         let application_extension = ApplicationExtension {
-                            identifier: String::from_utf8(buffer.read_slice(8)?)?,
+                            identifier: *buffer.read_slice(8)?,
                             authentication_code: [buffer.next()?, buffer.next()?, buffer.next()?],
                             data: {
                                 let data_size = buffer.next()? as usize;
@@ -171,7 +171,7 @@ impl Decoder {
         }
 
         Ok(GifDataStream {
-            version,
+            version: *version,
             logical_screen_descriptor,
             global_color_table,
             blocks,
